@@ -66,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
     {'title': 'アバター', 'box_office': '156.0'},
   ];
   final items = List<String>.generate(10, (i) => "Item $i");
-
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -94,7 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     setState(() {
       var item = convert.jsonDecode(resp.body) as Map<String, dynamic>;
-      print(item);
       _content.add(item);
     });
   }
