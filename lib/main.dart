@@ -82,7 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _request() async {
-    // GETを投げる
     http.Response resp = await http
         .get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
     if (resp.statusCode != 200) {
@@ -93,7 +92,31 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     setState(() {
       var item = convert.jsonDecode(resp.body) as Map<String, dynamic>;
+      print(item);
       _content.add(item);
+    });
+  }
+
+  void _postRequest() async {
+    Map<String, String> headers = {'content-type': 'application/json'};
+    String body = convert.jsonEncode(
+        {'title': "a1 test", 'body': "this is test by a1", 'userId': 1});
+    http.Response resp = await http.post(
+        Uri.parse('https://jsonplaceholder.typicode.com/posts/'),
+        headers: headers,
+        body: body);
+    if (resp.statusCode != 201) {
+      setState(() {
+        int statusCode = resp.statusCode;
+      });
+      return;
+    }
+    setState(() {
+      var item = convert.jsonDecode(resp.body) as Map<String, dynamic>;
+      print(item);
+      // var item = convert.jsonDecode(resp.body) as Map<String, dynami
+      _request();
+      // _content.add(item);
     });
   }
 
@@ -134,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _request,
+        onPressed: _postRequest,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
