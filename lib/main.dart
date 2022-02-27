@@ -81,6 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void showDailog() {}
+
   void _request() async {
     http.Response resp = await http
         .get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
@@ -141,17 +143,18 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: _content.length, // _contentの長さだけ表示
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            color: Colors.cyan[50],
-            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          return Card(
             child: ListTile(
-              title: Text(_content[index]['title']), // タイトル
-              subtitle: Text('興行収入:${_content[index]["box_office"]}億円'), // 興行収入
-              trailing: Icon(Icons.more_vert),
-              leading: Icon(Icons.movie, color: Colors.pink),
-              onTap: () {
-                // クリック時の動作を記述する
-              },
+              title: Text(_content[index]['title']),
+              trailing: IconButton(
+                icon: const Icon(Icons.more_vert),
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: Text(_content[index]['title']),
+                  ),
+                ),
+              ),
             ),
           );
         },
