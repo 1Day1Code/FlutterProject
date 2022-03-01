@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'package:sample_app/test.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -144,21 +146,26 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: _content.length, // _contentの長さだけ表示
         itemBuilder: (BuildContext context, int index) {
           return Card(
-            child: ListTile(
-              title: Text(_content[index]['title']),
-              trailing: IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: Text(_content[index]['title']),
+            child: Center(
+              child: Column(
+                children: [
+                  Text('正解です'),
+                  ElevatedButton(
+                    child: Text('次へ'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => test()),
+                      );
+                    },
                   ),
-                ),
+                ],
               ),
             ),
           );
         },
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _postRequest,
         tooltip: 'Increment',
